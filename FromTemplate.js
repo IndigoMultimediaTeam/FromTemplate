@@ -19,21 +19,24 @@
  *     <p slot="test">Jiný</p>
  * </from-template>
  */
-(function FromTemplate(){
+(function FromTemplate(d){
+    if(d.readyState==="loading") return d.addEventListener("DOMContentLoaded", FromTemplate.bind(this, d));
+
     class FromTemplateElement extends HTMLElement{
         static get tag_name(){ return "from-template"; }
         connectedCallback(){
             const els_hosts= Array.from(this.children);
             const use= this.getAttribute("use");
             /** @type {HTMLTemplateElement} */
-            const template_el= document.getElementById(use);
-            this.appendChild(document.importNode(template_el.content, true));
+            const template_el= d.getElementById(use);
+            this.appendChild(d.importNode(template_el.content, true));
 
-            this.dispatchEvent(new CustomEvent("load"));
-            if(!els_hosts.length) return false;
+            const onEnd= ()=> this.dispatchEvent(new CustomEvent("load"));
+            if(!els_hosts.length) return onEnd();
             const els_slots= toElsNamesDictionary(this.querySelectorAll("slot"));
             for(const el of els_hosts)
                 replace(Reflect.get(els_slots, el.slot), el);
+			onEnd();
         }
     }
     customElements.define(FromTemplateElement.tag_name, FromTemplateElement);
@@ -46,4 +49,4 @@
     function toElsNamesDictionary(els_query){
         return Array.from(els_query).reduce((o, el)=> (Reflect.set(o, el.name, el), o), {});
     }
-})();
+})(document);
