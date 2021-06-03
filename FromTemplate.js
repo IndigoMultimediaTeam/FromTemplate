@@ -1,5 +1,6 @@
 /* Slouží k importování statické HTML části dříve definované v souboru uvnitř `<template id="…">…</template>`
  * Pro spárování slouží ID `<template>` a atribut `use` ⇒ `<from-template use="…"></from-template>`
+ * Zdroj: https://github.com/IndigoMultimediaTeam/FromTemplate
  * Užitečné poznámky:
  * - lze naslouchat `onload` událost
  * - lze použít `<slot>`/`[slot]`:
