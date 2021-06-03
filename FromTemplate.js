@@ -4,7 +4,7 @@
  * Užitečné poznámky:
  * - lze naslouchat `onload` událost
  * - lze použít `<slot>`/`[slot]`:
- *   - pro spárovaní dynamické části (v „statickém” smyslu při vytváření elementu)
+ *   - pro spárovaní dynamické části (v „statickém” smyslu při vytváření elementu)
  *   - poznámka – simuluje chování web komponent se `shadowRoot`
  * Ukázka:
  * <template id="T_test">
@@ -37,14 +37,17 @@
             const els_slots= toElsNamesDictionary(this.querySelectorAll("slot"));
             for(const el of els_hosts)
                 replace(Reflect.get(els_slots, el.slot), el);
-			onEnd();
+            onEnd();
         }
     }
     customElements.define(FromTemplateElement.tag_name, FromTemplateElement);
 
+    /** @param {HTMLElement} el_slot @param {HTMLElement} el_host */
     function replace(el_slot, el_host){
         if(!el_slot) return false;
         el_slot.parentElement.insertBefore(el_host, el_slot);
+        const { className }= el_slot;
+        if(className) el_host.classList.add(...className.split(" "));
         el_slot.remove();
     }
     function toElsNamesDictionary(els_query){
