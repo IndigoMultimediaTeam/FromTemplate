@@ -21,7 +21,7 @@
  *     <p slot="test">Jiný</p>
  * </from-template>
  */
-(loadWebComponent || function loadWebComponent(component, when= "now"){
+(typeof loadWebComponent==="function" ? loadWebComponent : function loadWebComponent(component, when= "now"){
     const _this= this;
     if(when==="DOMContentLoaded"&&document.readyState==="loading")
         return document.addEventListener(when, component.bind(_this));
