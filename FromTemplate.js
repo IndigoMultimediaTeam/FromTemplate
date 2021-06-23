@@ -21,18 +21,20 @@
  *     <p slot="test">Jiný</p>
  * </from-template>
  */
-(function FromTemplate(d, state= d.readyState){
-    if(state==="indigo_bumbi_jaandrle") return loadOnDemand.addEventListener("appinit", FromTemplate.bind(this, d));
-    if(state==="loading") return d.addEventListener("DOMContentLoaded", FromTemplate.bind(this, d));
-
+(loadWebComponent || function loadWebComponent(component, when= "now"){
+    const _this= this;
+    if(when==="DOMContentLoaded"&&document.readyState==="loading")
+        return document.addEventListener(when, component.bind(_this));
+    component.call(_this);
+})(function FromTemplate(){
     class FromTemplateElement extends HTMLElement{
         static get tag_name(){ return "from-template"; }
         connectedCallback(){
             const els_hosts= Array.from(this.children);
             const use= this.getAttribute("use");
             /** @type {HTMLTemplateElement} */
-            const template_el= d.getElementById(use);
-            this.appendChild(d.importNode(template_el.content, true));
+            const template_el= document.getElementById(use);
+            this.appendChild(document.importNode(template_el.content, true));
 
             const onEnd= ()=> this.dispatchEvent(new CustomEvent("load"));
             if(!els_hosts.length) return onEnd();
@@ -55,4 +57,4 @@
     function toElsNamesDictionary(els_query){
         return Array.from(els_query).reduce((o, el)=> (Reflect.set(o, el.name, el), o), {});
     }
-})(document/*, zde případně vynutit stav pro cordova appky */);
+}, "DOMContentLoaded");
