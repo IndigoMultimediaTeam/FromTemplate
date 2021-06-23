@@ -1,6 +1,7 @@
 /* Slouží k importování statické HTML části dříve definované v souboru uvnitř `<template id="…">…</template>`
  * Pro spárování slouží ID `<template>` a atribut `use` ⇒ `<from-template use="…"></from-template>`
  * Zdroj: https://github.com/IndigoMultimediaTeam/FromTemplate
+ * Verze: 2021-06-23
  * Užitečné poznámky:
  * - lze naslouchat `onload` událost
  * - lze použít `<slot>`/`[slot]`:
@@ -21,7 +22,7 @@
  * </from-template>
  */
 (function FromTemplate(d, state= d.readyState){
-    if(state==="indigo_bumbi_jaandrle") return loadOnDemand.addOnReadyListener(FromTemplate.bind(this, d));
+    if(state==="indigo_bumbi_jaandrle") return loadOnDemand.addEventListener("appready", FromTemplate.bind(this, d));
     if(state==="loading") return d.addEventListener("DOMContentLoaded", FromTemplate.bind(this, d));
 
     class FromTemplateElement extends HTMLElement{
@@ -54,4 +55,4 @@
     function toElsNamesDictionary(els_query){
         return Array.from(els_query).reduce((o, el)=> (Reflect.set(o, el.name, el), o), {});
     }
-})(document);
+})(document/*, zde případně vynutit stav pro cordova appky */);
