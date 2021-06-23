@@ -54,4 +54,4 @@
     function toElsNamesDictionary(els_query){
         return Array.from(els_query).reduce((o, el)=> (Reflect.set(o, el.name, el), o), {});
     }
-})(document, "indigo_bumbi_jaandrle");
+})(document);
