@@ -20,8 +20,9 @@
  *     <p slot="test">Jiný</p>
  * </from-template>
  */
-(function FromTemplate(d){
-    if(d.readyState==="loading") return d.addEventListener("DOMContentLoaded", FromTemplate.bind(this, d));
+(function FromTemplate(d, state= d.readyState){
+    if(state==="indigo_bumbi_jaandrle") return loadOnDemand.addOnReadyListener(FromTemplate.bind(this, d));
+    if(state==="loading") return d.addEventListener("DOMContentLoaded", FromTemplate.bind(this, d));
 
     class FromTemplateElement extends HTMLElement{
         static get tag_name(){ return "from-template"; }
@@ -53,4 +54,4 @@
     function toElsNamesDictionary(els_query){
         return Array.from(els_query).reduce((o, el)=> (Reflect.set(o, el.name, el), o), {});
     }
-})(document);
+})(document, "indigo_bumbi_jaandrle");
