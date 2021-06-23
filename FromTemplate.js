@@ -22,7 +22,7 @@
  * </from-template>
  */
 (function FromTemplate(d, state= d.readyState){
-    if(state==="indigo_bumbi_jaandrle") return loadOnDemand.addEventListener("appready", FromTemplate.bind(this, d));
+    if(state==="indigo_bumbi_jaandrle") return loadOnDemand.addEventListener("appinit", FromTemplate.bind(this, d));
     if(state==="loading") return d.addEventListener("DOMContentLoaded", FromTemplate.bind(this, d));
 
     class FromTemplateElement extends HTMLElement{
