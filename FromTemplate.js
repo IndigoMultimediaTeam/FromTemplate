@@ -1,7 +1,10 @@
-/* Slouží k importování statické HTML části dříve definované v souboru uvnitř `<template id="…">…</template>`
+/* global customElementsInitiator  */
+/* *CE/WC* v0, see: https://github.com/IndigoMultimediaTeam/customElementsInitiator
+ *
+ * Slouží k importování statické HTML části dříve definované v souboru uvnitř `<template id="…">…</template>`
  * Pro spárování slouží ID `<template>` a atribut `use` ⇒ `<from-template use="…"></from-template>`
  * Zdroj: https://github.com/IndigoMultimediaTeam/FromTemplate
- * Verze: 2021-06-23
+ * Verze: 2021-06-24
  * Užitečné poznámky:
  * - lze naslouchat `onload` událost
  * - lze použít `<slot>`/`[slot]`:
@@ -21,11 +24,10 @@
  *     <p slot="test">Jiný</p>
  * </from-template>
  */
-(typeof loadWebComponent==="function" ? loadWebComponent : function loadWebComponent(component, when= "now"){
-    const _this= this;
+(typeof customElementsInitiator ==="function" ? customElementsInitiator  : function customElementsInitiator (component, when= "now"){
     if(when==="DOMContentLoaded"&&document.readyState==="loading")
-        return document.addEventListener(when, component.bind(_this));
-    component.call(_this);
+        return document.addEventListener(when, component.bind(this));
+    component.call(this);
 })(function FromTemplate(){
     class FromTemplateElement extends HTMLElement{
         static get tag_name(){ return "from-template"; }
