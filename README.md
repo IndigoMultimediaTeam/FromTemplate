@@ -9,4 +9,4 @@ git submodule add -b main --depth=1 git@github.com:IndigoMultimediaTeam/FromTemp
 ```
 … more info [`git submodule`](https://gist.github.com/jaandrle/b4836d72b63a3eefc6126d94c683e5b3).
 
-**Library file**: [FromTemplate](./FromTemplate.js).
+**Library file**: [./FromTemplate](./FromTemplate.js).
